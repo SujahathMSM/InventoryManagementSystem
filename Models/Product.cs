@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace InventoryManagementSystem.Models
 {
-    internal class Product
+    public class Product
     {
         public BindingList<Part> AssociatedParts { get; set; } = new BindingList<Part>();
         public int ProductID { get; set; }
