@@ -1,13 +1,9 @@
-﻿using InventoryManagementSystem.Models;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
+using InventoryManagementSystem.Models;
 
 namespace InventoryManagementSystem.Forms
 {
@@ -15,9 +11,12 @@ namespace InventoryManagementSystem.Forms
     {
         private Product currentProduct;
         private BindingList<Part> associatedParts = new BindingList<Part>();
-        public ModifyProductForm()
+
+        public ModifyProductForm(Product productToModify)
         {
             InitializeComponent();
+            this.currentProduct = productToModify;
+            this.Load += ModifyProductForm_Load;
         }
 
         private void ModifyProductForm_Load(object sender, EventArgs e)

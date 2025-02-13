@@ -126,6 +126,94 @@ namespace InventoryManagementSystem
             AddProductForm addProductForm = new AddProductForm();
             if (addProductForm.ShowDialog() == DialogResult.OK) { RefreshDataGridViews(); }
         }
+
+        private void btnModifyProduct_Click(object sender, EventArgs e)
+        {
+            if (dgvProducts.CurrentRow == null) return;
+
+            Product selectedProduct = dgvProducts.CurrentRow.DataBoundItem as Product;
+            if (selectedProduct != null)
+            {
+                ModifyProductForm form = new ModifyProductForm(selectedProduct);
+                if (form.ShowDialog() == DialogResult.OK)
+                {
+                    RefreshDataGridViews(); // Update UI
+                }
+            }
+        }
+
+        private void btnDeletePart_Click(object sender, EventArgs e)
+        {
+            if (dgvParts.CurrentRow == null)
+            {
+                MessageBox.Show("Please select a part to delete.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            int partID = (int)dgvParts.CurrentRow.Cells["PartID"].Value;
+            Part selectedPart = Inventory.LookupPart(partID);
+
+            if (selectedPart == null)
+            {
+                MessageBox.Show("Error: Part not found.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            // Check if this part is associated with any product
+            foreach (var product in Inventory.Products)
+            {
+                if (product.AssociatedParts.Contains(selectedPart))
+                {
+                    MessageBox.Show("This part is associated with a product and cannot be deleted.",
+                                    "Delete Error",
+                                    MessageBoxButtons.OK,
+                                    MessageBoxIcon.Error);
+                    return;
+                }
+            }
+
+            // Confirm deletion
+            var result = MessageBox.Show($"Are you sure you want to delete {selectedPart.Name}?",
+                                         "Confirm Deletion",
+                                         MessageBoxButtons.YesNo,
+                                         MessageBoxIcon.Question);
+
+            if (result == DialogResult.Yes)
+            {
+                Inventory.DeletePart(selectedPart);
+                RefreshDataGridViews(); // Refresh UI
+            }
+        }
+
+        private void btnDeleteProduct_Click(object sender, EventArgs e)
+        {
+            if (dgvProducts.CurrentRow == null)
+            {
+                MessageBox.Show("Please select a product to delete.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            int productID = (int)dgvProducts.CurrentRow.Cells["ProductID"].Value;
+            Product selectedProduct = Inventory.LookupProduct(productID);
+
+            if (selectedProduct == null)
+            {
+                MessageBox.Show("Error: Product not found.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            // Confirm deletion
+            var result = MessageBox.Show($"Are you sure you want to delete {selectedProduct.Name}?",
+                                         "Confirm Deletion",
+                                         MessageBoxButtons.YesNo,
+                                         MessageBoxIcon.Question);
+
+            if (result == DialogResult.Yes)
+            {
+                Inventory.RemoveProduct(selectedProduct.ProductID);
+                RefreshDataGridViews(); // Refresh UI
+            }
+        }
     }
 
 
