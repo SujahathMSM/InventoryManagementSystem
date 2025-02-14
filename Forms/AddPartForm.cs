@@ -35,7 +35,7 @@ namespace InventoryManagementSystem.Forms
         {
             try
             {
-                // Validate input
+
                 if (string.IsNullOrWhiteSpace(txtName.Text) ||
                     string.IsNullOrWhiteSpace(txtInventory.Text) ||
                     string.IsNullOrWhiteSpace(txtPrice.Text) ||
@@ -46,7 +46,7 @@ namespace InventoryManagementSystem.Forms
                     return;
                 }
 
-                // Convert input values
+
                 int inventory = int.Parse(txtInventory.Text);
                 decimal price = decimal.Parse(txtPrice.Text);
                 int min = int.Parse(txtMin.Text);
@@ -58,7 +58,7 @@ namespace InventoryManagementSystem.Forms
                     return;
                 }
 
-                // Determine part type
+
                 Part newPart;
                 if (rbInHouse.Checked)
                 {
@@ -82,10 +82,9 @@ namespace InventoryManagementSystem.Forms
                     newPart = new OutSourced(Inventory.AllParts.Count + 1, txtName.Text, price, inventory, min, max, txtDynamic.Text);
                 }
 
-                // Add part to inventory
+
                 Inventory.AddPart(newPart);
 
-                // Close form
                 this.DialogResult = DialogResult.OK;
                 this.Close();
             }

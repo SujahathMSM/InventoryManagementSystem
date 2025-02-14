@@ -23,13 +23,13 @@ namespace InventoryManagementSystem.Forms
         private void AddProductForm_Load(object sender, EventArgs e)
         {
             {
-                // Option A: Auto-generate columns for all public properties in Part
+
                 dgvAllCandidateParts.AutoGenerateColumns = true;
 
-                // Bind the list of parts to the DataGridView
+
                 dgvAllCandidateParts.DataSource = Inventory.AllParts;
 
-                // Bind Associated Parts DataGridView to this list
+
                 dgvAssociatedParts.AutoGenerateColumns = true;
                 dgvAssociatedParts.DataSource = associatedParts;
             }
@@ -39,7 +39,7 @@ namespace InventoryManagementSystem.Forms
         {
             string searchTerm = txtSearch.Text.Trim();
 
-            // Clear previous selection
+
             dgvAllCandidateParts.ClearSelection();
 
             if (string.IsNullOrWhiteSpace(searchTerm))
@@ -56,14 +56,14 @@ namespace InventoryManagementSystem.Forms
                 Part part = row.DataBoundItem as Part;
                 if (part != null)
                 {
-                    // Search by ID (if input is numeric) OR by name (case-insensitive)
+
                     if ((isNumeric && part.PartID == partID) ||
                         (!isNumeric && part.Name.IndexOf(searchTerm, StringComparison.OrdinalIgnoreCase) >= 0))
                     {
                         row.Selected = true;
                         dgvAllCandidateParts.FirstDisplayedScrollingRowIndex = row.Index;
                         found = true;
-                        break; // Stop at first match
+                        break; 
                     }
                 }
             }
@@ -84,14 +84,14 @@ namespace InventoryManagementSystem.Forms
 
             Part selectedPart = dgvAllCandidateParts.CurrentRow.DataBoundItem as Part;
 
-            // Prevent duplicate entries
+
             if (associatedParts.Contains(selectedPart))
             {
                 MessageBox.Show("This part is already added.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
-            // Add to associated parts list
+
             associatedParts.Add(selectedPart);
         }
 
@@ -118,7 +118,7 @@ namespace InventoryManagementSystem.Forms
 
         private void btnSave_Click(object sender, EventArgs e)
         {
-            // Validate input fields
+
             if (string.IsNullOrWhiteSpace(txtName.Text) ||
                 !int.TryParse(txtInventory.Text, out int inventory) ||
                 !decimal.TryParse(txtPrice.Text, out decimal price) ||
@@ -141,10 +141,10 @@ namespace InventoryManagementSystem.Forms
                 return;
             }
 
-            // Create new product
+
             Product newProduct = new Product
             {
-                ProductID = Inventory.Products.Count + 1, // Generate ID dynamically
+                ProductID = Inventory.Products.Count + 1, 
                 Name = txtName.Text,
                 InStock = inventory,
                 Price = price,
@@ -152,23 +152,22 @@ namespace InventoryManagementSystem.Forms
                 Max = max
             };
 
-            // Add associated parts to the product
+
             foreach (Part part in associatedParts)
             {
                 newProduct.AddAssociatedPart(part);
             }
 
-            // Add product to inventory
+
             Inventory.AddProduct(newProduct);
 
-            // Close form and notify the main form
             this.DialogResult = DialogResult.OK;
             this.Close();
         }
 
         private void btnCancel_Click(object sender, EventArgs e)
         {
-            // Confirm if the user really wants to cancel
+
             var result = MessageBox.Show("Are you sure you want to cancel? Any unsaved changes will be lost.",
                                          "Cancel Confirmation",
                                          MessageBoxButtons.YesNo,
@@ -176,7 +175,7 @@ namespace InventoryManagementSystem.Forms
 
             if (result == DialogResult.Yes)
             {
-                this.Close(); // Close the form without saving
+                this.Close(); 
             }
         }
     }

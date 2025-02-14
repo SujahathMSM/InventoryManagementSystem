@@ -118,6 +118,7 @@
             this.btnSearchParts.TabIndex = 7;
             this.btnSearchParts.Text = "Search";
             this.btnSearchParts.UseVisualStyleBackColor = true;
+            this.btnSearchParts.Click += new System.EventHandler(this.btnSearchParts_Click);
             // 
             // btnSearchProducts
             // 
@@ -127,10 +128,11 @@
             this.btnSearchProducts.TabIndex = 8;
             this.btnSearchProducts.Text = "Search";
             this.btnSearchProducts.UseVisualStyleBackColor = true;
+            this.btnSearchProducts.Click += new System.EventHandler(this.btnSearchProducts_Click);
             // 
             // btnAddPart
             // 
-            this.btnAddPart.Location = new System.Drawing.Point(276, 355);
+            this.btnAddPart.Location = new System.Drawing.Point(263, 355);
             this.btnAddPart.Name = "btnAddPart";
             this.btnAddPart.Size = new System.Drawing.Size(62, 23);
             this.btnAddPart.TabIndex = 9;
@@ -140,7 +142,7 @@
             // 
             // btnModifyPart
             // 
-            this.btnModifyPart.Location = new System.Drawing.Point(344, 355);
+            this.btnModifyPart.Location = new System.Drawing.Point(331, 355);
             this.btnModifyPart.Name = "btnModifyPart";
             this.btnModifyPart.Size = new System.Drawing.Size(66, 23);
             this.btnModifyPart.TabIndex = 10;
@@ -150,9 +152,9 @@
             // 
             // btnDeletePart
             // 
-            this.btnDeletePart.Location = new System.Drawing.Point(417, 355);
+            this.btnDeletePart.Location = new System.Drawing.Point(403, 355);
             this.btnDeletePart.Name = "btnDeletePart";
-            this.btnDeletePart.Size = new System.Drawing.Size(59, 23);
+            this.btnDeletePart.Size = new System.Drawing.Size(73, 23);
             this.btnDeletePart.TabIndex = 11;
             this.btnDeletePart.Text = "Delete";
             this.btnDeletePart.UseVisualStyleBackColor = true;
@@ -160,7 +162,7 @@
             // 
             // btnAddProduct
             // 
-            this.btnAddProduct.Location = new System.Drawing.Point(772, 355);
+            this.btnAddProduct.Location = new System.Drawing.Point(758, 355);
             this.btnAddProduct.Name = "btnAddProduct";
             this.btnAddProduct.Size = new System.Drawing.Size(53, 23);
             this.btnAddProduct.TabIndex = 12;
@@ -170,7 +172,7 @@
             // 
             // btnModifyProduct
             // 
-            this.btnModifyProduct.Location = new System.Drawing.Point(831, 355);
+            this.btnModifyProduct.Location = new System.Drawing.Point(817, 355);
             this.btnModifyProduct.Name = "btnModifyProduct";
             this.btnModifyProduct.Size = new System.Drawing.Size(56, 23);
             this.btnModifyProduct.TabIndex = 13;
@@ -180,9 +182,9 @@
             // 
             // btnDeleteProduct
             // 
-            this.btnDeleteProduct.Location = new System.Drawing.Point(893, 355);
+            this.btnDeleteProduct.Location = new System.Drawing.Point(879, 355);
             this.btnDeleteProduct.Name = "btnDeleteProduct";
-            this.btnDeleteProduct.Size = new System.Drawing.Size(58, 23);
+            this.btnDeleteProduct.Size = new System.Drawing.Size(72, 23);
             this.btnDeleteProduct.TabIndex = 14;
             this.btnDeleteProduct.Text = "Delete";
             this.btnDeleteProduct.UseVisualStyleBackColor = true;

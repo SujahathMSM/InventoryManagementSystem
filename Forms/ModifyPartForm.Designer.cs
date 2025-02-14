@@ -39,7 +39,7 @@
             this.lblMin = new System.Windows.Forms.Label();
             this.lblDynamic = new System.Windows.Forms.Label();
             this.btnSave = new System.Windows.Forms.Button();
-            this.lblCancel = new System.Windows.Forms.Button();
+            this.btnCancel = new System.Windows.Forms.Button();
             this.txtID = new System.Windows.Forms.TextBox();
             this.txtName = new System.Windows.Forms.TextBox();
             this.txtInventory = new System.Windows.Forms.TextBox();
@@ -156,15 +156,15 @@
             this.btnSave.UseVisualStyleBackColor = true;
             this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
             // 
-            // lblCancel
+            // btnCancel
             // 
-            this.lblCancel.Location = new System.Drawing.Point(688, 381);
-            this.lblCancel.Name = "lblCancel";
-            this.lblCancel.Size = new System.Drawing.Size(80, 44);
-            this.lblCancel.TabIndex = 11;
-            this.lblCancel.Text = "Cancel";
-            this.lblCancel.UseVisualStyleBackColor = true;
-            this.lblCancel.Click += new System.EventHandler(this.lblCancel_Click);
+            this.btnCancel.Location = new System.Drawing.Point(688, 381);
+            this.btnCancel.Name = "btnCancel";
+            this.btnCancel.Size = new System.Drawing.Size(80, 44);
+            this.btnCancel.TabIndex = 11;
+            this.btnCancel.Text = "Cancel";
+            this.btnCancel.UseVisualStyleBackColor = true;
+            this.btnCancel.Click += new System.EventHandler(this.lblCancel_Click);
             // 
             // txtID
             // 
@@ -227,7 +227,7 @@
             this.Controls.Add(this.txtInventory);
             this.Controls.Add(this.txtName);
             this.Controls.Add(this.txtID);
-            this.Controls.Add(this.lblCancel);
+            this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.btnSave);
             this.Controls.Add(this.lblDynamic);
             this.Controls.Add(this.lblMin);
@@ -259,7 +259,7 @@
         private System.Windows.Forms.Label lblMin;
         private System.Windows.Forms.Label lblDynamic;
         private System.Windows.Forms.Button btnSave;
-        private System.Windows.Forms.Button lblCancel;
+        private System.Windows.Forms.Button btnCancel;
         private System.Windows.Forms.TextBox txtID;
         private System.Windows.Forms.TextBox txtName;
         private System.Windows.Forms.TextBox txtInventory;

@@ -21,7 +21,7 @@ namespace InventoryManagementSystem.Forms
 
         private void ModifyProductForm_Load(object sender, EventArgs e)
         {
-            // Populate text fields with product data
+
             txtID.Text = currentProduct.ProductID.ToString();
             txtName.Text = currentProduct.Name;
             txtInventory.Text = currentProduct.InStock.ToString();
@@ -29,10 +29,8 @@ namespace InventoryManagementSystem.Forms
             txtMin.Text = currentProduct.Min.ToString();
             txtMax.Text = currentProduct.Max.ToString();
 
-            // Copy associated parts
             associatedParts = new BindingList<Part>(currentProduct.AssociatedParts.ToList());
 
-            // Bind DataGrids
             dgvAllCandidateParts.DataSource = Inventory.AllParts;
             dgvAssociatedParts.DataSource = associatedParts;
         }
@@ -137,7 +135,6 @@ namespace InventoryManagementSystem.Forms
                 return;
             }
 
-            // Update product
             currentProduct.Name = txtName.Text;
             currentProduct.InStock = inventory;
             currentProduct.Price = price;
@@ -150,7 +147,6 @@ namespace InventoryManagementSystem.Forms
                 currentProduct.AddAssociatedPart(part);
             }
 
-            // Update inventory
             Inventory.UpdateProduct(currentProduct.ProductID, currentProduct);
 
             this.DialogResult = DialogResult.OK;

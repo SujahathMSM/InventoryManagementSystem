@@ -65,7 +65,6 @@ namespace InventoryManagementSystem.Forms
         {
             try
             {
-                // Validate input fields
                 if (string.IsNullOrWhiteSpace(txtName.Text) ||
                     string.IsNullOrWhiteSpace(txtInventory.Text) ||
                     string.IsNullOrWhiteSpace(txtPrice.Text) ||
@@ -87,7 +86,6 @@ namespace InventoryManagementSystem.Forms
                     return;
                 }
 
-                // Update the existing part object
                 selectedPart.Name = txtName.Text;
                 selectedPart.Price = price;
                 selectedPart.InStock = inventory;
@@ -103,10 +101,8 @@ namespace InventoryManagementSystem.Forms
                     outsourcedPart.CompanyName = txtDynamic.Text;
                 }
 
-                // Update Inventory
                 Inventory.UpdatePart(selectedPart.PartID, selectedPart);
 
-                // Close the form and return to main form
                 this.DialogResult = DialogResult.OK;
                 this.Close();
             }
