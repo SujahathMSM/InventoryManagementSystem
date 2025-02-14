@@ -34,7 +34,7 @@
             this.lblInventory = new System.Windows.Forms.Label();
             this.lblPrice = new System.Windows.Forms.Label();
             this.lblMax = new System.Windows.Forms.Label();
-            this.label6 = new System.Windows.Forms.Label();
+            this.lblMin = new System.Windows.Forms.Label();
             this.txtID = new System.Windows.Forms.TextBox();
             this.txtName = new System.Windows.Forms.TextBox();
             this.txtInventory = new System.Windows.Forms.TextBox();
@@ -109,14 +109,14 @@
             this.lblMax.TabIndex = 5;
             this.lblMax.Text = "Max";
             // 
-            // label6
+            // lblMin
             // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(253, 270);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(42, 16);
-            this.label6.TabIndex = 6;
-            this.label6.Text = "lblMin";
+            this.lblMin.AutoSize = true;
+            this.lblMin.Location = new System.Drawing.Point(253, 270);
+            this.lblMin.Name = "lblMin";
+            this.lblMin.Size = new System.Drawing.Size(28, 16);
+            this.lblMin.TabIndex = 6;
+            this.lblMin.Text = "Min";
             // 
             // txtID
             // 
@@ -276,7 +276,7 @@
             this.Controls.Add(this.txtInventory);
             this.Controls.Add(this.txtName);
             this.Controls.Add(this.txtID);
-            this.Controls.Add(this.label6);
+            this.Controls.Add(this.lblMin);
             this.Controls.Add(this.lblMax);
             this.Controls.Add(this.lblPrice);
             this.Controls.Add(this.lblInventory);
@@ -301,7 +301,7 @@
         private System.Windows.Forms.Label lblInventory;
         private System.Windows.Forms.Label lblPrice;
         private System.Windows.Forms.Label lblMax;
-        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Label lblMin;
         private System.Windows.Forms.TextBox txtID;
         private System.Windows.Forms.TextBox txtName;
         private System.Windows.Forms.TextBox txtInventory;

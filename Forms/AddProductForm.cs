@@ -119,50 +119,117 @@ namespace InventoryManagementSystem.Forms
         private void btnSave_Click(object sender, EventArgs e)
         {
 
-            if (string.IsNullOrWhiteSpace(txtName.Text) ||
-                !int.TryParse(txtInventory.Text, out int inventory) ||
-                !decimal.TryParse(txtPrice.Text, out decimal price) ||
-                !int.TryParse(txtMin.Text, out int min) ||
-                !int.TryParse(txtMax.Text, out int max))
+            bool isValid = true;
+
+            // Clear previous error styles
+            ClearErrorStyles();
+
+            // Validate Name (ensure it's not empty)
+            if (string.IsNullOrWhiteSpace(txtName.Text))
             {
-                MessageBox.Show("Please enter valid values for all fields.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
+                ShowError(txtName, "Product name cannot be empty.");
+                isValid = false;
             }
 
+            // Validate Inventory
+            if (!int.TryParse(txtInventory.Text, out int inventory))
+            {
+                ShowError(txtInventory, "Inventory must be a valid number.");
+                isValid = false;
+            }
+            else if (inventory < 0)
+            {
+                ShowError(txtInventory, "Inventory cannot be negative.");
+                isValid = false;
+            }
+
+            // Validate Price
+            if (!decimal.TryParse(txtPrice.Text, out decimal price))
+            {
+                ShowError(txtPrice, "Price must be a valid decimal number.");
+                isValid = false;
+            }
+            else if (price <= 0)
+            {
+                ShowError(txtPrice, "Price must be greater than zero.");
+                isValid = false;
+            }
+
+            // Validate Min and Max
+            if (!int.TryParse(txtMin.Text, out int min))
+            {
+                ShowError(txtMin, "Min must be a valid number.");
+                isValid = false;
+            }
+
+            if (!int.TryParse(txtMax.Text, out int max))
+            {
+                ShowError(txtMax, "Max must be a valid number.");
+                isValid = false;
+            }
+
+            // Ensure Min is less than or equal to Max
             if (min > max)
             {
-                MessageBox.Show("Min cannot be greater than Max.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
+                ShowError(txtMin, "Min cannot be greater than Max.");
+                ShowError(txtMax, "Max cannot be less than Min.");
+                isValid = false;
             }
 
+            // Ensure Inventory is between Min and Max
             if (inventory < min || inventory > max)
             {
-                MessageBox.Show("Inventory must be between Min and Max.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
+                ShowError(txtInventory, $"Inventory must be between {min} and {max}.");
+                isValid = false;
             }
 
-
-            Product newProduct = new Product
+            // If all validations passed, create the product
+            if (isValid)
             {
-                ProductID = Inventory.Products.Count + 1, 
-                Name = txtName.Text,
-                InStock = inventory,
-                Price = price,
-                Min = min,
-                Max = max
-            };
+                Product newProduct = new Product
+                {
+                    ProductID = Inventory.Products.Count + 1, // Assuming this is how ProductID is assigned
+                    Name = txtName.Text,
+                    InStock = inventory,
+                    Price = price,
+                    Min = min,
+                    Max = max
+                };
 
+                foreach (Part part in associatedParts)
+                {
+                    newProduct.AddAssociatedPart(part);
+                }
 
-            foreach (Part part in associatedParts)
-            {
-                newProduct.AddAssociatedPart(part);
+                Inventory.AddProduct(newProduct);
+
+                this.DialogResult = DialogResult.OK;
+                this.Close();
             }
+            else
+            {
+                MessageBox.Show("Please correct the highlighted errors before saving.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
 
+        private void ShowError(Control control, string message)
+        {
+            // Show error message next to the field (using a label or tooltip)
+            errorProvider.SetError(control, message);
 
-            Inventory.AddProduct(newProduct);
+            // Change the background color of the field to indicate error
+            control.BackColor = Color.LightSalmon;
+        }
 
-            this.DialogResult = DialogResult.OK;
-            this.Close();
+        private void ClearErrorStyles()
+        {
+            // Clear all error styles and reset field colors
+            errorProvider.Clear();
+            txtName.BackColor = Color.White;
+            txtInventory.BackColor = Color.White;
+            txtPrice.BackColor = Color.White;
+            txtMin.BackColor = Color.White;
+            txtMax.BackColor = Color.White;
         }
 
         private void btnCancel_Click(object sender, EventArgs e)
