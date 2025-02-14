@@ -11,6 +11,7 @@ namespace InventoryManagementSystem.Forms
     {
         private Product currentProduct;
         private BindingList<Part> associatedParts = new BindingList<Part>();
+        private ErrorProvider errorProvider = new ErrorProvider();
 
         public ModifyProductForm(Product productToModify)
         {
@@ -113,46 +114,110 @@ namespace InventoryManagementSystem.Forms
 
         private void btnSave_Click(object sender, EventArgs e)
         {
-            if (string.IsNullOrWhiteSpace(txtName.Text) ||
-                !int.TryParse(txtInventory.Text, out int inventory) ||
-                !decimal.TryParse(txtPrice.Text, out decimal price) ||
-                !int.TryParse(txtMin.Text, out int min) ||
-                !int.TryParse(txtMax.Text, out int max))
+            bool isValid = true;
+
+            ClearErrorStyles();
+
+  
+            if (string.IsNullOrWhiteSpace(txtName.Text))
             {
-                MessageBox.Show("Please enter valid values for all fields.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
+                ShowError(txtName, "Product name cannot be empty.");
+                isValid = false;
             }
+
+  
+            if (!int.TryParse(txtInventory.Text, out int inventory))
+            {
+                ShowError(txtInventory, "Inventory must be a valid number.");
+                isValid = false;
+            }
+            else if (inventory < 0)
+            {
+                ShowError(txtInventory, "Inventory cannot be negative.");
+                isValid = false;
+            }
+
+
+            if (!decimal.TryParse(txtPrice.Text, out decimal price))
+            {
+                ShowError(txtPrice, "Price must be a valid decimal number.");
+                isValid = false;
+            }
+            else if (price <= 0)
+            {
+                ShowError(txtPrice, "Price must be greater than zero.");
+                isValid = false;
+            }
+
+
+            if (!int.TryParse(txtMin.Text, out int min))
+            {
+                ShowError(txtMin, "Min must be a valid number.");
+                isValid = false;
+            }
+
+            if (!int.TryParse(txtMax.Text, out int max))
+            {
+                ShowError(txtMax, "Max must be a valid number.");
+                isValid = false;
+            }
+
 
             if (min > max)
             {
-                MessageBox.Show("Min cannot be greater than Max.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
+                ShowError(txtMin, "Min cannot be greater than Max.");
+                ShowError(txtMax, "Max cannot be less than Min.");
+                isValid = false;
             }
 
+  
             if (inventory < min || inventory > max)
             {
-                MessageBox.Show("Inventory must be between Min and Max.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
+                ShowError(txtInventory, $"Inventory must be between {min} and {max}.");
+                isValid = false;
             }
 
-            currentProduct.Name = txtName.Text;
-            currentProduct.InStock = inventory;
-            currentProduct.Price = price;
-            currentProduct.Min = min;
-            currentProduct.Max = max;
-
-            currentProduct.AssociatedParts.Clear();
-            foreach (Part part in associatedParts)
+            if (isValid)
             {
-                currentProduct.AddAssociatedPart(part);
+                currentProduct.Name = txtName.Text;
+                currentProduct.InStock = inventory;
+                currentProduct.Price = price;
+                currentProduct.Min = min;
+                currentProduct.Max = max;
+
+                currentProduct.AssociatedParts.Clear();
+                foreach (Part part in associatedParts)
+                {
+                    currentProduct.AddAssociatedPart(part);
+                }
+
+                Inventory.UpdateProduct(currentProduct.ProductID, currentProduct);
+
+                this.DialogResult = DialogResult.OK;
+                this.Close();
             }
-
-            Inventory.UpdateProduct(currentProduct.ProductID, currentProduct);
-
-            this.DialogResult = DialogResult.OK;
-            this.Close();
+            else
+            {
+                MessageBox.Show("Please correct the highlighted errors before saving.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
+        private void ShowError(Control control, string message)
+        {
+            errorProvider.SetError(control, message);
+
+            control.BackColor = System.Drawing.Color.LightSalmon;
+        }
+
+        private void ClearErrorStyles()
+        {
+            errorProvider.Clear();
+            txtName.BackColor = System.Drawing.Color.White;
+            txtInventory.BackColor = System.Drawing.Color.White;
+            txtPrice.BackColor = System.Drawing.Color.White;
+            txtMin.BackColor = System.Drawing.Color.White;
+            txtMax.BackColor = System.Drawing.Color.White;
+        }
         private void btnCancel_Click(object sender, EventArgs e)
         {
             var result = MessageBox.Show("Are you sure you want to cancel? Any unsaved changes will be lost.",
